@@ -1,0 +1,6 @@
+[submodule "HFSTS.wiki"]
+	path = HFSTS.wiki
+	url = https://github.com/dria7226/HFSTS.wiki.git
+[submodule "crossplatform_app"]
+	path = crossplatform_app
+	url = https://github.com/cptclvtch/crossplatform_app
