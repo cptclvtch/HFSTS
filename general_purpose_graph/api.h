@@ -1,6 +1,5 @@
 #include <stdlib.h>
 
-/*Data structs*/
 //Node component
 typedef struct s_node_component node_component;
 
@@ -15,6 +14,9 @@ typedef struct s_node_component
 
     node_component* children;
 }node_component;
+
+node_component* allocate_new_node_component();
+void deallocate_node_component();
 
 //Node
 typedef struct s_node node;
@@ -32,8 +34,7 @@ typedef struct s_node
     node* children;
 }node;
 
-//Node storage?
+// void add_node_component(node* target, node_component* )
 
-/*Functions*/
-node* allocate_new_node();
-void deallocate_node(node* target);
+// node* allocate_new_node();
+// void deallocate_node(node* target);
