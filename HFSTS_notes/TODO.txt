@@ -7,4 +7,4 @@
  - physics simulation
  - graphics
  - design assistant
- - 
+ - project planner

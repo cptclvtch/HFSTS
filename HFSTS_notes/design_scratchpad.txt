@@ -14,6 +14,7 @@
   
   A different CORE implementation for every platform.
 -----------------------------------------------
+Random Ideas:
+- Each node context should be associated with a "hat"/outfit, and when changing contexts, "Clippy" should change "hats"
 
-UI Interface Framework:
-platform implementation <> functionality requirement <> editor implementation
+- make the app feel like the physical representation of an engineers drawing table
