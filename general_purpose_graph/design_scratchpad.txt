@@ -1,0 +1,60 @@
+node type:
+- list of components
+- list of pointers
+
+component type:
+- data type specifier
+- visual implementation specifier
+- context type list
+
+- see how Nuklear implements their node editor and modify it
+
+Additional features:
+- pan
+- add/remove node
+    - add/remove/design component
+- load/save
+
+Initial node and connection types:
+- Design Tool
+    - Goal node (s text"Name":e text)
+    - Solution node (s text"Name": e text)
+- Neural Network Tool
+    - Neuron (float)
+    - Weighted connection (s text"Weight":e float)
+- Planner
+    - goal(s text"Name":e text, s text"Time to complete": e float)
+    -
+
+
+Initial component types:
+- Comment (e text:title, e text:content)
+
+Needed functionality:
+- hold any data
+    - data types (static or editable):
+        - text list
+        - integer list
+        - float list
+        - data type group list
+    - should come with a component designer
+- freeform connections
+    - connections can also have components
+- components filterable by context
+
+Solution:
+
+
+- develop a visual vocabulary
+
+Development stages:
+- programatically create node graph
+- node graph loading/saving
+
+- visual representation of graph
+
+- panning implementation
+- adding/removing nodes UI
+- adding/removing connections UI
+
+- component creator tool
