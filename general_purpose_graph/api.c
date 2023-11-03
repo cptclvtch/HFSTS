@@ -9,7 +9,7 @@ node_component* allocate_new_node_component()
 
     new_component.texts = (char**)malloc(sizeof(char*));
     new_component.integers = (uint32_t*)malloc(sizeof(uint32_t));
-    new_component.floats = (float*)malloc(sizeof(float)); 
+    new_component.floats = (float*)malloc(sizeof(float));
 
     return new_component;
 }
