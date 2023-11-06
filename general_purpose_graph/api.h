@@ -5,12 +5,9 @@ typedef struct s_node_component node_component;
 
 typedef struct s_node_component
 {
-    char** strings;
-    uint32_t number_of_strings;
-    uint32_t* integers;
-    uint32_t number_of_integers;
-    float* floats;
-    uint32_t number_of_floats;
+    char* strings; // null terminated string
+    uint32_t integer_number;
+    float float_number;
 
     node_component* children;
 }node_component;
@@ -23,10 +20,10 @@ typedef struct s_node node;
 
 typedef struct s_node
 {
-    uint32_t id;
+    // uint32_t id;
     
     node_component* components;
-    uint32_t number_of_components;
+    uint32_t max_component_index;
 
     node* connections;
     uint32_t number_of_connections;
@@ -34,7 +31,8 @@ typedef struct s_node
     node* children;
 }node;
 
-// void add_node_component(node* target, node_component* )
+node* allocate_new_node();
+void deallocate_node(node* target);
 
-// node* allocate_new_node();
-// void deallocate_node(node* target);
+void add_node_component(node* target, node_component* component);
+void add_connection(node* target, node* connection);

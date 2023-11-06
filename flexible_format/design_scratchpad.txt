@@ -1,0 +1,31 @@
+Reimplement c structs:
+- Aligned data(numbers) and non-aligned data(text)
+
+/////////////////////
+Short term:
+/////////////////////
+Features:
+- ascii implementation for text
+- file backing (optional or implicit)
+- format specifier
+- caching
+
+To do:
+- chunked, binary storage
+- write unit tests
+- file backing
+    - desktop
+    - android
+
+- do load from storage test and optimization
+
+/////////////////////
+Long term:
+/////////////////////
+Features:
+- utf8 implementation for text
+- async io
+- 64bit implementation
+
+To do:
+- create 64bit implementation flag and replace necessary variable types (and write tests)

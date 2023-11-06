@@ -3,7 +3,7 @@
 #include "api.h"
 
 #define PRINT_FN printf
-#include "unit_testing.c"
+#include "../unit_testing.c"
 
 int main()
 {
