@@ -1,5 +1,10 @@
 #include <stdlib.h>
 
+#define NODE_NO_ERROR 0
+#define NODE_ERROR_NO_NODE 1
+#define NODE_ERROR_NO_COMPONENT 2
+#define NODE_ERROR_NO_MEMORY 3
+
 //Node component
 typedef struct s_node_component node_component;
 

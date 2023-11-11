@@ -1,9 +1,5 @@
 #include "api.h"
 
-#define NODE_ERROR_NO_NODE 1
-#define NODE_ERROR_NO_COMPONENT 2
-#define NODE_ERROR_NO_MEMORY 3
-
 //Node component
 node_component* allocate_new_node_component()
 {
@@ -22,7 +18,7 @@ uint8_t deallocate_node_component(node_component* target)
     // if(target->children) deallocate_node_component(target->children);
     free(target);
 
-    return 0;
+    return NODE_NO_ERROR;
 }
 
 //Node
@@ -32,7 +28,7 @@ node* allocate_new_node()
 
     new_node = (node*)malloc(sizeof(node));
 
-    if(!new_node) return;
+    if(!new_node) return 0;
 
     new_node->components = allocate_new_node_component();
     new_node->max_component_index = 0;
@@ -51,7 +47,7 @@ uint8_t deallocate_node(node* target)
 
     free(target);
 
-    return 0;
+    return NODE_NO_ERROR;
 }
 
 //Utilities
@@ -77,7 +73,7 @@ uint8_t add_existing_node_component(node* target, node_component* component)
     free(target->components);
     target->components = new_component_list;
 
-    return 0;
+    return NODE_NO_ERROR;
 }
 
 node_component* add_new_node_component(node* target)
@@ -102,5 +98,5 @@ node_component* add_new_node_component(node* target)
 
 // uint8_t add_connection(node* target, node* connection)
 // {
-//      return 0;
+//      return NODE_NO_ERROR;
 // }

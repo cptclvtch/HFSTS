@@ -14,26 +14,27 @@ int main()
 
     node_component* temp_component;
     node* temp_node;
+    uint32_t temp;
 
-    #define SUBTITLE "Component Allocation"
+    #define SUBTITLE "Allocation"
     temp_component = allocate_new_node_component();
     VERIFY_SINGLE_VALUE(temp_component,!=,NULL)
     COLLECT_FINDINGS
 
     #undef SUBTITLE
-    #define SUBTITLE "Component Deallocation - Best Case Scenario"
+    #define SUBTITLE "Deallocation - Best Case Scenario"
     result = deallocate_node_component(temp_component);
-    VERIFY_SINGLE_VALUE(result,==,0)
+    VERIFY_SINGLE_VALUE(result,==,NODE_NO_ERROR)
     COLLECT_FINDINGS
 
     #undef SUBTITLE
-    #define SUBTITLE "Component Deallocation - No component specified"
+    #define SUBTITLE "Deallocation - No component specified"
     result = deallocate_node_component(NULL);
     VERIFY_SINGLE_VALUE(result,==,NODE_ERROR_NO_NODE)
     COLLECT_FINDINGS
 
     #undef SUBTITLE
-    #define SUBTITLE "Component Allocation - Allocating data"
+    #define SUBTITLE "Allocation - Allocating data"
     temp_component = allocate_new_node_component();
     temp_component->text = "t";
     temp_component->integer_number = 1;
@@ -65,27 +66,60 @@ int main()
     TEST_PRINT(TITLE"\n")
 
     #undef SUBTITLE
-    #define SUBTITLE "Node Allocation"
+    #define SUBTITLE "Allocation"
     temp_node = allocate_new_node();
     VERIFY_SINGLE_VALUE(temp_node,!=,NULL)
+    VERIFY_SINGLE_VALUE(temp_node->max_component_index,==,0)
+    VERIFY_SINGLE_VALUE(temp_node->components,!=,NULL)
     COLLECT_FINDINGS
 
-    // node* new_node = allocate_new_node();
-    
-    // node_component* component;
-    // component = new_node->components;
+    #undef SUBTITLE
+    #define SUBTITLE "Deallocation - Best Case scenario"
+    result = deallocate_node(temp_node);
+    VERIFY_SINGLE_VALUE(result,==,NODE_NO_ERROR)
+    COLLECT_FINDINGS
 
-    // printf("%p\n", component);
-    // component->text = "The integer is: ";
-    // component->integer_number = 2;
+    #undef SUBTITLE
+    #define SUBTITLE "Deallocation - No node specified"
+    result = deallocate_node(NULL);
+    VERIFY_SINGLE_VALUE(result,==,NODE_ERROR_NO_NODE)
+    COLLECT_FINDINGS
 
-    // component = add_new_node_component(new_node);
-    // if(component) printf("Successfully added node component! %p\n", component);
+    #undef SUBTITLE
+    #define SUBTITLE "Adding existing component - Best Case Scenario"
+    temp = temp_node->max_component_index;
+    temp_component = temp_node->components;
+    result = add_existing_node_component(temp_node, allocate_new_node_component());
+    VERIFY_SINGLE_VALUE(temp_node->components,!=,temp_component)
+    VERIFY_SINGLE_VALUE(temp_node->max_component_index,==,temp+1)
+    COLLECT_FINDINGS
 
-    // component->text = "The float is: ";
-    // component->float_number = 0.5;
+    #undef SUBTITLE
+    #define SUBTITLE "Adding existing component - No node specified"
+    result = add_existing_node_component(NULL, temp_component);
+	VERIFY_SINGLE_VALUE(result,==,NODE_ERROR_NO_NODE)
+    COLLECT_FINDINGS
 
-    // PRINT_FN("%s\n", new_node->components[0].text);
+    #undef SUBTITLE
+    #define SUBTITLE "Adding existing component - No component specified"
+    result = add_existing_node_component(temp_node, NULL);
+	VERIFY_SINGLE_VALUE(result,==,NODE_ERROR_NO_COMPONENT)
+    COLLECT_FINDINGS
+
+    #undef SUBTITLE
+    #define SUBTITLE "Adding new component - Best Case Scenario"
+    temp = temp_node->max_component_index;
+    temp_component = temp_node->components;
+    add_new_node_component(temp_node);
+    VERIFY_SINGLE_VALUE(temp_node->components,!=,temp_component)
+    VERIFY_SINGLE_VALUE(temp_node->max_component_index,==,temp+1)
+    COLLECT_FINDINGS
+	
+    #undef SUBTITLE
+    #define SUBTITLE "Adding new component - No node specified"
+    add_new_node_component(NULL);
+	VERIFY_SINGLE_VALUE(result,==,NODE_ERROR_NO_NODE)
+    COLLECT_FINDINGS
 
     // //create two nodes
     // node* new_node;
