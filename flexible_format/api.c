@@ -6,9 +6,7 @@ void free_data_buffer(data_buffer* target)
 
     uint32_t i = 0;
     for(;i <= target->max_chunk_index; i++)
-    {
-        free(target->chunks[i]);
-    }
+        free(target->chunks[i]); problem here
 
     free(target->chunks);
     free(target);
@@ -26,7 +24,7 @@ data_buffer* create_data_buffer(data_buffer* target)
     target->chunks = (data_chunk*)malloc(sizeof(data_chunk*));
     
     //create seed chunk
-    data_chunk chunk = (data_chunk*)malloc(sizeof(data_chunk));
+    data_chunk chunk = (data_chunk*)malloc(sizeof(data_chunk)); problem here
     chunk->data = (uint8_t*)malloc(target->max_chunk_data_index*sizeof(uint8_t));
     chunk->cached = 0;
 
@@ -42,7 +40,7 @@ void resize_chunks(data_buffer* target, uint32_t new_max_chunk_data_index)
 
     if(target->max_chunk_data_index == new_max_chunk_data_index) return;
 
-    IMPLEMENTATION_MISSING
+    // IMPLEMENTATION_MISSING
 }
 
 void add_new_chunks(data_buffer* target, uint32_t number_of_additional_chunks)

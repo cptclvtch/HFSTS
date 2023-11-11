@@ -1,4 +1,4 @@
-#include "api.h"
+#include "api.c"
 
 #define PRINT_FN printf
 #include "../unit_testing.c"

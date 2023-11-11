@@ -1,5 +1,3 @@
-- finish implementation for script_run_tests.c
-
 - complete todo list in flexible_format
 
 - complete todo list in gpg
@@ -8,3 +6,6 @@
 - pass tests on linux
 - pass tests on osx
 - pass tests on android
+
+- finish node GUI
+- create node component designer

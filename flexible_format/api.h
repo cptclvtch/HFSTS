@@ -1,3 +1,6 @@
+#ifndef FLEXIBLE_FORMAT
+#define FLEXIBLE_FORMAT
+
 // #include <stdint.h>
 #include <stdlib.h>
 
@@ -42,3 +45,5 @@ void remove_chunk_range(data_buffer* target, uint32_t range_start, uint32_t rang
 //void save_format();
 //void attach_format_to_file_type();
 //void attach_standard_formats();
+
+#endif
