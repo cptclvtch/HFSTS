@@ -24,8 +24,8 @@ typedef struct s_data_buffer{
     uint32_t max_data_index;
 }data_buffer;
 
-void free_list(data_buffer* target);
-data_buffer* create_list(data_buffer* target);
+void free_data_buffer(data_buffer* target);
+data_buffer* create_data_buffer(data_buffer* target);
 void resize_chunks(data_buffer* target, uint32_t new_max_chunk_index);
 
 //Hidden utility scripts

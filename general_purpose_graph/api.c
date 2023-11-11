@@ -16,9 +16,13 @@ node_component* allocate_new_node_component()
 
 uint8_t deallocate_node_component(node_component* target)
 {
+    if(!target) return NODE_ERROR_NO_NODE;
+
     //recursive free component tree
     // if(target->children) deallocate_node_component(target->children);
     free(target);
+
+    return 0;
 }
 
 //Node
@@ -46,6 +50,8 @@ uint8_t deallocate_node(node* target)
     // free(target->connections);
 
     free(target);
+
+    return 0;
 }
 
 //Utilities
@@ -70,6 +76,8 @@ uint8_t add_existing_node_component(node* target, node_component* component)
 
     free(target->components);
     target->components = new_component_list;
+
+    return 0;
 }
 
 node_component* add_new_node_component(node* target)
@@ -94,5 +102,5 @@ node_component* add_new_node_component(node* target)
 
 // uint8_t add_connection(node* target, node* connection)
 // {
-
+//      return 0;
 // }

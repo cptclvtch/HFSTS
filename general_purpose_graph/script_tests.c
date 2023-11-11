@@ -17,20 +17,19 @@ int main()
 
     #define SUBTITLE "Component Allocation"
     temp_component = allocate_new_node_component();
-
     VERIFY_SINGLE_VALUE(temp_component,!=,NULL)
-    COLLECT_FINDINGS
-
-    #undef SUBTITLE
-    #define SUBTITLE "Component Deallocation - No component specified"
-    result = deallocate_node_component(NULL);
-    VERIFY_SINGLE_VALUE(result,==,NODE_ERROR_NO_NODE)
     COLLECT_FINDINGS
 
     #undef SUBTITLE
     #define SUBTITLE "Component Deallocation - Best Case Scenario"
     result = deallocate_node_component(temp_component);
     VERIFY_SINGLE_VALUE(result,==,0)
+    COLLECT_FINDINGS
+
+    #undef SUBTITLE
+    #define SUBTITLE "Component Deallocation - No component specified"
+    result = deallocate_node_component(NULL);
+    VERIFY_SINGLE_VALUE(result,==,NODE_ERROR_NO_NODE)
     COLLECT_FINDINGS
 
     #undef SUBTITLE

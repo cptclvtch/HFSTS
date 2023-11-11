@@ -5,17 +5,18 @@
 
 int main()
 {
-    data_chunk* chunk = (data_chunk*)malloc(sizeof(data_chunk));
+    data_buffer* temp_buffer;
 
-    chunk->cached = 0;
-    chunk->data = 0;
+    #define TITLE "Data buffers"
+    TEST_PRINT(TITLE"\n")
 
-    list* data = (list*)malloc(sizeof(list));
+    #define SUBTITLE "Buffer allocation - Best case scenario"
+    temp_buffer = create_data_buffer(temp_buffer);
 
-    data->max_data_index = 10;
-    data->max_chunk_index = 255;
-    
-    data->chunks = (data_chunk*)malloc();
+    VERIFY_SINGLE_VALUE(data_buffer,!=,NULL)
+    COLLECT_FINDINGS
 
-    PRINT_FN("Hi\n");
+    ADD_SEPARATOR
+
+    DEBRIEF
 }
