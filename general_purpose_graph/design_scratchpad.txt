@@ -63,11 +63,12 @@ Development stages:
 
 ///////////////////////////////////////
 To Do:
-- fix bug when applying char* to text
-- finish unit tests
-- implement connection function
+- fix bug when applying char* to node->text
+- fix DEBRIEF not working
+- implement remove_node_from_graph()
 
 - implement node rendering
     - component rendering
     -
+- implement connection function    
 - implement connection rendering

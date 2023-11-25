@@ -17,7 +17,7 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
     /* allocate complete window space */
     canvas = nk_window_get_canvas(ctx);
     total_space = nk_window_get_content_region(ctx);
-    nk_layout_space_begin(ctx, NK_STATIC, total_space.h, max_node_index + 1);
+    nk_layout_space_begin(ctx, NK_STATIC, total_space.h, INT_MAX);
     {
         struct nk_rect size = nk_layout_space_bounds(ctx);
         // struct nk_panel* node = 0;
@@ -33,15 +33,15 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
 
         /* execute each node as a movable group */
         uint8_t i = 0;
-        for(; i <= max_node_index; i++)
+        for(; i < main_graph.size; i++)
         {
-            node* it = nodes + i;
+            node* it = main_graph.nodes[i];
             /* calculate scrolled node window position and size */
             nk_layout_space_push(ctx, nk_rect(it->x - scrolling.x,
                 it->y - scrolling.y, it->width, it->height));
 
             /* execute node window */
-            if (nk_group_begin(ctx, it->components[0].text, NK_WINDOW_MOVABLE|NK_WINDOW_NO_SCROLLBAR|NK_WINDOW_BORDER|NK_WINDOW_TITLE))
+            if (nk_group_begin(ctx, it->components[0]->text, NK_WINDOW_MOVABLE|NK_WINDOW_NO_SCROLLBAR|NK_WINDOW_BORDER|NK_WINDOW_TITLE))
             {
                 /* always have last selected node on top */
                 // node = nk_window_get_panel(ctx);
@@ -57,7 +57,7 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
 
                 /* ================= NODE CONTENT =====================*/
                 nk_layout_row_dynamic(ctx, 25, 1);
-                it->components[0].integer_number = (nk_byte)nk_propertyi(ctx, "#Int:", 0, it->components[0].integer_number, 255, 1,1);
+                it->components[0]->integer_number = (nk_byte)nk_propertyi(ctx, "#Int:", 0, it->components[0]->integer_number, 255, 1,1);
                 // it->float_number = (nk_byte)nk_propertyf(ctx, "#Float:", 0, it->float_number, 255, 1,1);
                 /* ====================================================*/
                 nk_group_end(ctx);
@@ -178,8 +178,8 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
         if (nk_contextual_begin(ctx, 0, nk_vec2(100, 220), nk_window_get_bounds(ctx)))
         {
             nk_layout_row_dynamic(ctx, 25, 1);
-            if (nk_contextual_item_label(ctx, "New", NK_TEXT_CENTERED) && max_node_index < 0xff)
-                nodes[++max_node_index] = *allocate_new_node();
+            if (nk_contextual_item_label(ctx, "New", NK_TEXT_CENTERED) && main_graph.size <= 0xff)
+                add_graph_node(&main_graph, create_node());
             nk_contextual_end(ctx);
         }
     }
