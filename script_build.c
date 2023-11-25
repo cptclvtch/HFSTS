@@ -26,19 +26,60 @@
 #define LIBRARY_NAMES " -lSDL2"
 #define LIBRARIES LIBRARY_PATHS LIBRARY_NAMES
 
+uint8_t number_of_sources = 0;
+void add_source(char** buffer, char* folder, char* file)
+{
+    buffer[2*number_of_sources] = folder;
+    buffer[2*number_of_sources+1] = file;
+    number_of_sources++;
+}
+
+void compile_sources(char** source_files)
+{
+    char command[256];
+    //folder - source file pairs
+    uint8_t i = 0;
+    for(;i < number_of_sources;i++)
+    {
+            get_cwd(command, 256);
+            printf("Current directory is: %s", command);
+            printf("Compiling %s... ", source_files[2*i]);
+        set_cwd(source_files[2*i]);
+            get_cwd(command, 256);
+            printf("Now moving into %s, and compiling %s", command, source_files[2*i+1]);
+        sprintf(command, COMPILER" -c %s/%s", source_files[2*i], source_files[2*i+1]);
+        system(command);
+        printf("Done.\n");
+        set_cwd("..");
+            get_cwd(command, 256);
+            printf("Current directory is: %s", command);
+    }
+}
+
 int main()
 {
+    char command[256];
     printf("Attempting build...\n");
 
     //clear build folder
     fs_delete("build/", NON_RECURSIVE);
 
     //check for pre-compiled objects and update if necessary
+    //folder - source file pairs
+    char* sources[256];
+    add_source(sources, "general_purpose_graph", "api.c");
+    // add_source(sources, "flexible_format","api.c");
 
+    //compile_sources(object_files, number_of_sources);
+
+    char source_paths[2048];
+    uint8_t i = 0;
+    for(;i < number_of_sources; i++)
+        sprintf(source_paths, "%s %s/%s", source_paths, sources[2*i], sources[2*i+1]);
 
     //build actual program
-    char command[256];
-    sprintf(command, COMPILER " main.c" LIBRARIES FLAGS " -o build/"EXECUTABLE);
+    sprintf(command, COMPILER " main.c %s" LIBRARIES FLAGS " -o build/"EXECUTABLE, source_paths);
+    printf("%s\n", command);
     system(command);
 
     //copy necessary libraries
