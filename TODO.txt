@@ -1,1 +1,11 @@
+- complete todo list in gpg
 
+- pass tests on windows
+- pass tests on linux
+- pass tests on osx
+- pass tests on android
+
+- finish node GUI
+- create node component designer
+
+- complete todo list in flexible_format

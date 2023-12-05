@@ -7,6 +7,8 @@ component type:
 - visual implementation specifier
 - context type list
 
+Where should position data be located? Per Node, or per Component? (average of all component positions determines node position)
+
 - see how Nuklear implements their node editor and modify it
 
 Additional features:
@@ -58,3 +60,15 @@ Development stages:
 - adding/removing connections UI
 
 - component creator tool
+
+///////////////////////////////////////
+To Do:
+- fix bug when applying char* to node->text
+- fix DEBRIEF not working
+- implement remove_node_from_graph()
+
+- implement node rendering
+    - component rendering
+    -
+- implement connection function    
+- implement connection rendering

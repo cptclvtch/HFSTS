@@ -1,0 +1,4 @@
+[submodule "crossplatform_app"]
+	path = crossplatform_app
+	url = https://github.com/cptclvtch/crossplatform_app
+	branch = main
