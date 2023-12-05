@@ -3,7 +3,13 @@
 //Node component
 node_component* create_node_component()
 {
-    return (node_component*)realloc(NULL, sizeof(node_component));
+    node_component* component = (node_component*)realloc(NULL, sizeof(node_component));
+
+    component->text = "";
+    component->integer_number = 0;
+    component->float_number = 0.0f;
+
+    return component;
 }
 
 uint8_t free_node_component(node_component* target)
@@ -23,6 +29,13 @@ node* create_node()
     node* new_node = (node*)realloc(NULL, sizeof(node));
 
     if(!new_node) return NULL;
+
+    new_node->x = 0;
+    new_node->y = 0;
+    new_node->z = 0;
+    
+    new_node->width = 0;
+    new_node->height = 0;
 
     new_node->components = (node_component**)realloc(NULL, sizeof(node_component*));
     new_node->components[0] = create_node_component();
@@ -56,7 +69,10 @@ uint8_t free_node(node* target)
 //Graph
 graph* create_graph()
 {
-    return (graph*)realloc(NULL, sizeof(graph));
+    graph* g = (graph*)realloc(NULL, sizeof(graph));
+    g->size = 0;
+    
+    return g;
 }
 
 uint8_t free_graph(graph* target)

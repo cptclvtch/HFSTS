@@ -26,15 +26,19 @@
 #define LIBRARY_NAMES " -lSDL2"
 #define LIBRARIES LIBRARY_PATHS LIBRARY_NAMES
 
+//-------------------------
+char* sources[256];
+#define SOURCE_FOLDER(i) sources[2*i]
+#define SOURCE_FILE(i) sources[2*i+1]
 uint8_t number_of_sources = 0;
-void add_source(char** buffer, char* folder, char* file)
+void add_source(char* folder, char* file)
 {
-    buffer[2*number_of_sources] = folder;
-    buffer[2*number_of_sources+1] = file;
+    SOURCE_FOLDER(number_of_sources) = folder;
+    SOURCE_FILE(number_of_sources) = file;
     number_of_sources++;
 }
 
-void compile_sources(char** source_files)
+void compile_sources()
 {
     char command[256];
     //folder - source file pairs
@@ -43,11 +47,11 @@ void compile_sources(char** source_files)
     {
             get_cwd(command, 256);
             printf("Current directory is: %s", command);
-            printf("Compiling %s... ", source_files[2*i]);
-        set_cwd(source_files[2*i]);
+            printf("Compiling %s... ", SOURCE_FOLDER(i));
+        set_cwd(SOURCE_FOLDER(i));
             get_cwd(command, 256);
-            printf("Now moving into %s, and compiling %s", command, source_files[2*i+1]);
-        sprintf(command, COMPILER" -c %s/%s", source_files[2*i], source_files[2*i+1]);
+            printf("Now moving into %s, and compiling %s", command, SOURCE_FILE(i));
+        sprintf(command, COMPILER" -c %s/%s.c", SOURCE_FOLDER(i), SOURCE_FILE(i));
         system(command);
         printf("Done.\n");
         set_cwd("..");
@@ -65,20 +69,18 @@ int main()
     fs_delete("build/", NON_RECURSIVE);
 
     //check for pre-compiled objects and update if necessary
-    //folder - source file pairs
-    char* sources[256];
-    add_source(sources, "general_purpose_graph", "api.c");
-    // add_source(sources, "flexible_format","api.c");
-
-    //compile_sources(object_files, number_of_sources);
-
-    char source_paths[2048];
+    add_source("crossplatform_app","api");
+    add_source("general_purpose_graph","api");
+    
+    char source_paths[2048] = "";
     uint8_t i = 0;
     for(;i < number_of_sources; i++)
-        sprintf(source_paths, "%s %s/%s", source_paths, sources[2*i], sources[2*i+1]);
+        sprintf(source_paths, "%s %s/%s.c", source_paths, SOURCE_FOLDER(i), SOURCE_FILE(i));
 
     //build actual program
-    sprintf(command, COMPILER " main.c %s" LIBRARIES FLAGS " -o build/"EXECUTABLE, source_paths);
+    char executable_name[256] = EXECUTABLE;
+    replace_characters(executable_name, ' ', '_');
+    sprintf(command, COMPILER " main.c %s" LIBRARIES FLAGS " -o build/%s", source_paths, executable_name);
     printf("%s\n", command);
     system(command);
 

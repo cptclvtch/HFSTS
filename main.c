@@ -1,5 +1,5 @@
 #include "app_configuration.c"
-#include "crossplatform_app/api.c"
+#include "crossplatform_app/api.h"
 
 #include "general_purpose_graph/api.h"
 
@@ -13,16 +13,20 @@ int main()
 
     //Graph init
     graph main_graph;
-    // create_graph(&main_graph);
+    create_graph(&main_graph);
 
     //Example graph
-    // add_graph_node(&main_graph, create_node());
-    // main_graph.nodes[0]->x = 10;
-    // main_graph.nodes[0]->y = 10;
-    // add_graph_node(&main_graph, create_node());
-    // main_graph.nodes[1]->x = 200;
-    // main_graph.nodes[1]->y = 10;
-
+    add_graph_node(&main_graph, create_node());
+    main_graph.nodes[0]->x = 10;
+    main_graph.nodes[0]->y = 10;
+    add_graph_node(&main_graph, create_node());
+    //trying to find my segfault here
+    if(main_graph.nodes[1] != NULL)
+    {
+        main_graph.nodes[1]->x = 200;
+        main_graph.nodes[1]->y = 10;
+    }
+    
     printf("1\n");
 
     //Main Loop

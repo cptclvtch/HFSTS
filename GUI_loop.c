@@ -36,12 +36,13 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
         for(; i < main_graph.size; i++)
         {
             node* it = main_graph.nodes[i];
+            printf("%u\n",it->x);
             /* calculate scrolled node window position and size */
             nk_layout_space_push(ctx, nk_rect(it->x - scrolling.x,
                 it->y - scrolling.y, it->width, it->height));
 
             /* execute node window */
-            if (nk_group_begin(ctx, it->components[0]->text, NK_WINDOW_MOVABLE|NK_WINDOW_NO_SCROLLBAR|NK_WINDOW_BORDER|NK_WINDOW_TITLE))
+            if (nk_group_begin(ctx, "node", NK_WINDOW_MOVABLE|NK_WINDOW_NO_SCROLLBAR|NK_WINDOW_BORDER|NK_WINDOW_TITLE))
             {
                 /* always have last selected node on top */
                 // node = nk_window_get_panel(ctx);
@@ -57,7 +58,7 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
 
                 /* ================= NODE CONTENT =====================*/
                 nk_layout_row_dynamic(ctx, 25, 1);
-                it->components[0]->integer_number = (nk_byte)nk_propertyi(ctx, "#Int:", 0, it->components[0]->integer_number, 255, 1,1);
+                // it->components[0]->integer_number = (nk_byte)nk_propertyi(ctx, "#Int:", 0, it->components[0]->integer_number, 255, 1,1);
                 // it->float_number = (nk_byte)nk_propertyf(ctx, "#Float:", 0, it->float_number, 255, 1,1);
                 /* ====================================================*/
                 nk_group_end(ctx);
