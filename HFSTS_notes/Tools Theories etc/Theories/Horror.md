@@ -1,4 +1,0 @@
-- normal life can still be scary if theres always a monster stalking you from around the corner  
-- the horror-correct implementation of darkness is also the physically-correct implementation of darkness. The graininess of it is causing people to imagine things in it.  
-- Mirrors dont reflect all the light back. Its always darker and scarier in the mirror world.  
--
