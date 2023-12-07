@@ -4,7 +4,7 @@
 
 //-------------------------
 //Build debug by default, unless release is specified (-D RELEASE)
-#define DEBUG_FLAGS " -g"
+#define DEBUG_FLAGS " -g -O0"
 #ifdef RELEASE
 #undef DEBUG_FLAGS
 #define DEBUG_FLAGS ""
@@ -13,7 +13,11 @@
 #define WINDOWS_FLAGS ""
 #ifdef _WIN32
 #undef WINDOWS_FLAGS
+#ifdef RELEASE
 #define WINDOWS_FLAGS " -Wl,-subsystem,windows"
+#else
+#define WINDOWS_FLAGS " -Wl,-subsystem,console"
+#endif
 #endif
 
 #if defined __APPLE__ || __linux__

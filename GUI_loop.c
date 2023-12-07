@@ -11,8 +11,11 @@ struct nk_command_buffer* canvas;
 struct nk_vec2 scrolling;
 // struct node_linking linking;
 
-if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
-    NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR|NK_WINDOW_MOVABLE|NK_WINDOW_CLOSABLE))
+//background color
+// ctx->style.window.fixed_background = nk_style_item_color(nk_rgb(0.15*255,0.4*255,0.15*255));
+ctx->style.window.fixed_background = nk_style_item_color(nk_rgb(1,77,78));
+
+if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, window_w, window_h), NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR))
 {
     /* allocate complete window space */
     canvas = nk_window_get_canvas(ctx);
@@ -25,7 +28,8 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
         /* display grid */
         float x, y;
         const float grid_size = 32.0f;
-        const struct nk_color grid_color = nk_rgb(50, 50, 50);
+        // const struct nk_color grid_color = nk_rgb(200, 255, 200);
+        const struct nk_color grid_color = nk_rgb(1, 55, 58);
         for (x = (float)fmod(size.x - scrolling.x, grid_size); x < size.w; x += grid_size)
             nk_stroke_line(canvas, x+size.x, size.y, x+size.x, size.y+size.h, 1.0f, grid_color);
         for (y = (float)fmod(size.y - scrolling.y, grid_size); y < size.h; y += grid_size)
@@ -33,10 +37,9 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
 
         /* execute each node as a movable group */
         uint8_t i = 0;
-        for(; i < main_graph.size; i++)
+        for(; i < main_graph->size; i++)
         {
-            node* it = main_graph.nodes[i];
-            printf("%u\n",it->x);
+            node* it = main_graph->nodes[i];
             /* calculate scrolled node window position and size */
             nk_layout_space_push(ctx, nk_rect(it->x - scrolling.x,
                 it->y - scrolling.y, it->width, it->height));
@@ -57,9 +60,13 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
                 // }
 
                 /* ================= NODE CONTENT =====================*/
-                nk_layout_row_dynamic(ctx, 25, 1);
-                // it->components[0]->integer_number = (nk_byte)nk_propertyi(ctx, "#Int:", 0, it->components[0]->integer_number, 255, 1,1);
-                // it->float_number = (nk_byte)nk_propertyf(ctx, "#Float:", 0, it->float_number, 255, 1,1);
+                uint8_t j = 0;
+                for(; j <= it->max_component_index; j++)
+                {
+                    nk_layout_row_dynamic(ctx, 25, 1);
+                    it->components[j]->integer_number = (nk_byte)nk_propertyi(ctx, "#Int:", 0, it->components[j]->integer_number, 255, 1,1);
+                    it->components[j]->float_number = (nk_byte)nk_propertyf(ctx, "#Float:", 0, it->components[j]->float_number, 255, 1,1);
+                }
                 /* ====================================================*/
                 nk_group_end(ctx);
             }
@@ -179,8 +186,15 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
         if (nk_contextual_begin(ctx, 0, nk_vec2(100, 220), nk_window_get_bounds(ctx)))
         {
             nk_layout_row_dynamic(ctx, 25, 1);
-            if (nk_contextual_item_label(ctx, "New", NK_TEXT_CENTERED) && main_graph.size <= 0xff)
-                add_graph_node(&main_graph, create_node());
+            if (nk_contextual_item_label(ctx, "New node", NK_TEXT_CENTERED))
+            {
+                node* n = create_node();
+                n->x = in->mouse.pos.x;
+                n->y = in->mouse.pos.y;
+                n->width = 100;
+                n->height = 100;
+                add_graph_node(main_graph, n);
+            }
             nk_contextual_end(ctx);
         }
     }
@@ -188,7 +202,7 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, 800, 600),
 
     /* window content scrolling */
     if (nk_input_is_mouse_hovering_rect(in, nk_window_get_bounds(ctx)) &&
-        nk_input_is_mouse_down(in, NK_BUTTON_RIGHT)) {
+        nk_input_is_mouse_down(in, NK_BUTTON_LEFT)) {
         scrolling.x += in->mouse.delta.x;
         scrolling.y += in->mouse.delta.y;
     }

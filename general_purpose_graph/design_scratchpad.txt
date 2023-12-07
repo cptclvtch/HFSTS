@@ -63,12 +63,20 @@ Development stages:
 
 ///////////////////////////////////////
 To Do:
+- consolidate this scratchpad
+- fix SDL_GetWindowBordersSize messing up the UI
+- fix window padding
 - fix bug when applying char* to node->text
-- fix DEBRIEF not working
 - implement remove_node_from_graph()
+    - add a trash button near the node title
+
+- node graph saving
+- node graph loading
 
 - implement node rendering
     - component rendering
     -
 - implement connection function    
 - implement connection rendering
+
+- implement component designer
