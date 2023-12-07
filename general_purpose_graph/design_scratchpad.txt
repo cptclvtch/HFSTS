@@ -63,12 +63,21 @@ Development stages:
 
 ///////////////////////////////////////
 To Do:
+- consolidate this scratchpad
+- make nodes movable
+- fix window resizing
 - fix bug when applying char* to node->text
-- fix DEBRIEF not working
 - implement remove_node_from_graph()
+    - add a trash button near the node title
+
+- node graph saving
+- node graph loading
 
 - implement node rendering
     - component rendering
     -
+
+- implement component designer
+
 - implement connection function    
 - implement connection rendering

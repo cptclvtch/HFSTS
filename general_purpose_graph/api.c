@@ -70,6 +70,7 @@ uint8_t free_node(node* target)
 graph* create_graph()
 {
     graph* g = (graph*)realloc(NULL, sizeof(graph));
+    g->nodes = NULL;
     g->size = 0;
     
     return g;
@@ -95,10 +96,11 @@ uint8_t add_graph_node(graph* target, node* to_add)
     if(!target) return NODE_ERROR_NO_GRAPH;
     if(!to_add) return NODE_ERROR_NO_NODE;
 
-    node* new_node_list = (node*)realloc(target->nodes, sizeof(node)*(target->size+1));
+    node** new_node_list = (node**)realloc(target->nodes, sizeof(node*)*(target->size+1));
 
     if(!new_node_list) return NODE_ERROR_NO_MEMORY;
 
+    target->nodes = new_node_list;
     target->nodes[target->size] = to_add;
     target->size++;
 
@@ -111,15 +113,23 @@ uint8_t add_node_component(node* target, node_component* component)
     if(!target) return NODE_ERROR_NO_NODE;
     if(!component) return NODE_ERROR_NO_COMPONENT;
 
-    node_component* new_list = (node_component*)realloc(target->components,
-                                                        sizeof(node_component)*target->max_component_index+2);
+    node_component** new_list = (node_component**)realloc(target->components,
+                                                        sizeof(node_component*)*target->max_component_index+2);
 
     if(!new_list) return NODE_ERROR_NO_MEMORY;
 
+    target->components = new_list;
     target->max_component_index++;
     target->components[target->max_component_index] = component;
 
     return NODE_NO_ERROR;
+}
+
+uint8_t add_new_node_component(node* target)
+{
+    node_component* c = create_node_component();
+
+    return add_node_component(target, c);
 }
 
 // uint8_t add_connection(node* target, node* connection)
