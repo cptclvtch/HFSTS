@@ -64,8 +64,8 @@ Development stages:
 ///////////////////////////////////////
 To Do:
 - consolidate this scratchpad
-- fix SDL_GetWindowBordersSize messing up the UI
-- fix window padding
+- make nodes movable
+- fix window resizing
 - fix bug when applying char* to node->text
 - implement remove_node_from_graph()
     - add a trash button near the node title
@@ -76,7 +76,8 @@ To Do:
 - implement node rendering
     - component rendering
     -
-- implement connection function    
-- implement connection rendering
 
 - implement component designer
+
+- implement connection function    
+- implement connection rendering

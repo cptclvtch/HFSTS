@@ -14,6 +14,7 @@ struct nk_vec2 scrolling;
 //background color
 // ctx->style.window.fixed_background = nk_style_item_color(nk_rgb(0.15*255,0.4*255,0.15*255));
 ctx->style.window.fixed_background = nk_style_item_color(nk_rgb(1,77,78));
+ctx->style.window.padding = nk_vec2(0,0);
 
 if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, window_w, window_h), NK_WINDOW_BORDER|NK_WINDOW_NO_SCROLLBAR))
 {
@@ -45,6 +46,7 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, window_w, window_h), NK_WINDOW_BORDE
                 it->y - scrolling.y, it->width, it->height));
 
             /* execute node window */
+            ctx->style.window.fixed_background = nk_style_item_color(nk_rgb(50,50,50));
             if (nk_group_begin(ctx, "node", NK_WINDOW_MOVABLE|NK_WINDOW_NO_SCROLLBAR|NK_WINDOW_BORDER|NK_WINDOW_TITLE))
             {
                 /* always have last selected node on top */
@@ -189,8 +191,8 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, window_w, window_h), NK_WINDOW_BORDE
             if (nk_contextual_item_label(ctx, "New node", NK_TEXT_CENTERED))
             {
                 node* n = create_node();
-                n->x = in->mouse.pos.x;
-                n->y = in->mouse.pos.y;
+                n->x = in->mouse.pos.x + scrolling.x;
+                n->y = in->mouse.pos.y + scrolling.y;
                 n->width = 100;
                 n->height = 100;
                 add_graph_node(main_graph, n);
@@ -203,8 +205,8 @@ if (nk_begin(ctx, "NodeEdit", nk_rect(0, 0, window_w, window_h), NK_WINDOW_BORDE
     /* window content scrolling */
     if (nk_input_is_mouse_hovering_rect(in, nk_window_get_bounds(ctx)) &&
         nk_input_is_mouse_down(in, NK_BUTTON_LEFT)) {
-        scrolling.x += in->mouse.delta.x;
-        scrolling.y += in->mouse.delta.y;
+        scrolling.x -= in->mouse.delta.x;
+        scrolling.y -= in->mouse.delta.y;
     }
 }
 nk_end(ctx);

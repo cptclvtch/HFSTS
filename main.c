@@ -6,12 +6,8 @@
 int main()
 {
     setup();
-    SDL_DisplayMode dm;
-    SDL_GetCurrentDisplayMode(0, &dm);
-    int l,r,t,b;
-    SDL_GetWindowBordersSize(window, &t, &l, &b, &r);
-    SDL_SetWindowSize(window, dm.w, dm.h - t - b - 45/*????*/);
-    SDL_SetWindowPosition(window,0,20);
+    SDL_SetWindowResizable(window, SDL_TRUE);
+    
     int window_w,window_h;
     SDL_GetWindowSize(window, &window_w, &window_h);
 
