@@ -1,0 +1,55 @@
+To Do:
+- make nodes movable
+- auto-resize nodes by component count
+- fix fps normalization
+- refactor
+
+- write tests for delete-ing / trashing
+- add/remove node
+    - add a trash area for both nodes and components (make it clearable and let it hold trashed items)
+    - implement component clipboard (cut, copy, paste, trash)?
+
+- refactor
+
+- node graph saving
+- node graph loading
+- write tests
+- menu bar (File->Save/Load)
+
+- refactor
+
+- implement component designer
+
+- node/connection/both type (both by default)
+- component context type
+- context filtering
+
+- make components rearrangeable
+
+- refactor
+
+- implement connection function    
+    - connection rendering
+    
+----------------------------------
+Long Term:
+- develop a visual vocabulary
+- component type development:
+    - general purpose data
+    - visual implementation specifier (Graph C program, limited by an API)
+
+Initial node and connection types:
+- Design Tool
+    - Goal node (s text"Name":e text)
+    - Solution node (s text"Name": e text)
+- Neural Network Tool
+    - Neuron (float)
+    - Weighted connection (s text"Weight":e float)
+- Planner
+    - goal(s text"Name":e text, s text"Time to complete": e float)
+    - 
+- GraphC Programming
+    - 
+
+Initial component types:
+- Comment (e text:title, e text:content)

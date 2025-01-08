@@ -1,6 +1,3 @@
-Reimplement c structs:
-- Aligned data(numbers) and non-aligned data(text)
-
 /////////////////////
 Short term:
 /////////////////////
@@ -11,8 +8,11 @@ Features:
 - caching
 
 To do:
+- data format
+    - implement ANOTHER_FORMAT
+    - update unit tests
 - chunked, binary storage
-- write unit tests
+    - write unit tests
 - file backing
     - desktop
     - android
