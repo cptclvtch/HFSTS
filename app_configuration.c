@@ -1,7 +1,10 @@
 #define APP_NAME "HFSTS"
 
-// #define USE_VK
 #define SDL_IMPLEMENTATION
+
+#define NK_IMPLEMENTATION
+    #define NK_SDL_GL3_IMPLEMENTATION
+    // #define NK_SDL_RENDERER_IMPLEMENTATION
 
 /*----------------------MACRO-POST-PROCESSING-------------------------*/
 #ifdef _WIN32

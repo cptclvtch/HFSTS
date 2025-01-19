@@ -14,18 +14,18 @@ int main()
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     CHECK_ERROR(renderer == NULL, SDL_GetError());
 
+    setup_nk();
+
     SDL_SetWindowResizable(window, SDL_TRUE);
     SDL_GetWindowSize(window, &width, &height);
 
-    load_ui();
-
     //Graph init
-    main_graph = create_graph();
-    if(!main_graph)
-    {
-        printf("Failure! Couldn't create graph.\n");
-        return 0;
-    }
+    // main_graph = create_graph();
+    // if(!main_graph)
+    // {
+    //     printf("Failure! Couldn't create graph.\n");
+    //     return 0;
+    // }
 
     //Main Loop
     while(running)
@@ -42,5 +42,7 @@ int main()
     }
 
     close();
+    #ifdef NK_SDL_RENDERER_IMPLEMENTATION
     SDL_DestroyRenderer(renderer);
+    #endif
 }

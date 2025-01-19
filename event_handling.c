@@ -1,5 +1,6 @@
 SDL_Event event;
 float mouse_dx, mouse_dy;
+nk_input_begin(ctx);
 while(SDL_PollEvent(&event))
 {
     switch(event.type)
@@ -41,4 +42,7 @@ while(SDL_PollEvent(&event))
             }
         break;
     }
+
+    nk_sdl_handle_event(&event);
 }
+nk_input_end(ctx);
