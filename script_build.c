@@ -1,10 +1,10 @@
 #include <stdlib.h>
-#include "crossplatform_app/script_helper.c"
+#include "../crossplatform_app/script_helper.c"
 #include "app_configuration.c"
 
 //-------------------------
 //Build debug by default, unless release is specified (-D RELEASE)
-#define DEBUG_FLAGS " -g"
+#define DEBUG_FLAGS " -g -O0"
 #ifdef RELEASE
 #undef DEBUG_FLAGS
 #define DEBUG_FLAGS ""
@@ -13,7 +13,11 @@
 #define WINDOWS_FLAGS ""
 #ifdef _WIN32
 #undef WINDOWS_FLAGS
+#ifdef RELEASE
 #define WINDOWS_FLAGS " -Wl,-subsystem,windows"
+#else
+#define WINDOWS_FLAGS " -Wl,-subsystem,console"
+#endif
 #endif
 
 #if defined __APPLE__ || __linux__
@@ -22,7 +26,7 @@
 //-------------------------
 #define FLAGS DEBUG_FLAGS " -w" WINDOWS_FLAGS
 
-#define LIBRARY_PATHS " -L./crossplatform_app/backend/SDL2/lib/x86"
+#define LIBRARY_PATHS " -L../crossplatform_app/backend/SDL2/lib/x86"
 #define LIBRARY_NAMES " -lSDL2"
 #define LIBRARIES LIBRARY_PATHS LIBRARY_NAMES
 
@@ -65,11 +69,8 @@ int main()
     char command[256];
     printf("Attempting build...\n");
 
-    //clear build folder
-    fs_delete("build/", NON_RECURSIVE);
-
     //check for pre-compiled objects and update if necessary
-    add_source("crossplatform_app","api");
+    // add_source("crossplatform_app","api");
     add_source("general_purpose_graph","api");
     
     char source_paths[2048] = "";
@@ -83,15 +84,6 @@ int main()
     sprintf(command, COMPILER " main.c %s" LIBRARIES FLAGS " -o build/%s", source_paths, executable_name);
     printf("%s\n", command);
     system(command);
-
-    //copy necessary libraries
-    #ifdef _WIN32
-    fs_copy("crossplatform_app/backend/SDL2/lib/x86/SDL2.dll", "build/", NON_RECURSIVE);
-    #endif
-
-    #if defined __APPLE__ || __linux__
-    fs_copy("crossplatform_app/backend/SDL2/lib/x86/libSDL2.a", "build/", NON_RECURSIVE);
-    #endif
 
     printf("Done.\n");
 }

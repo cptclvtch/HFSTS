@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "crossplatform_app/script_helper.c"
+#include "../crossplatform_app/script_helper.c"
 
 int main()
 {    

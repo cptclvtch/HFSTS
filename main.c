@@ -1,59 +1,48 @@
 #include "app_configuration.c"
-#include "crossplatform_app/api.h"
+#include "../crossplatform_app/api.c"
 
 #include "general_purpose_graph/api.h"
+// #include "../graph_c/graph_c.c"
+
+graph* main_graph;
+struct SDL_Renderer* renderer;
+#include "GUI/api.c"
 
 int main()
 {
-    printf("-1\n");
-    SDL_LogMessage(SDL_LogInfo,SDL_LogVerbose,"-1");
     setup();
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    CHECK_ERROR(renderer == NULL, SDL_GetError());
 
-    printf("0\n");
+    setup_nk();
+
+    SDL_SetWindowResizable(window, SDL_TRUE);
+    SDL_GetWindowSize(window, &width, &height);
 
     //Graph init
-    graph main_graph;
-    create_graph(&main_graph);
-
-    //Example graph
-    add_graph_node(&main_graph, create_node());
-    main_graph.nodes[0]->x = 10;
-    main_graph.nodes[0]->y = 10;
-    add_graph_node(&main_graph, create_node());
-    //trying to find my segfault here
-    if(main_graph.nodes[1] != NULL)
-    {
-        main_graph.nodes[1]->x = 200;
-        main_graph.nodes[1]->y = 10;
-    }
-    
-    printf("1\n");
+    // main_graph = create_graph();
+    // if(!main_graph)
+    // {
+    //     printf("Failure! Couldn't create graph.\n");
+    //     return 0;
+    // }
 
     //Main Loop
-    bool running = true;
     while(running)
     {
-        //Input
         #include "event_handling.c"
-        
-        printf("2\n");
 
         //GUI
-        // #include "GUI_test.c"
-        #include "GUI_loop.c"
-        
-        printf("3\n");
+        render_ui();
 
-        //Rendering
-        SDL_SetRenderDrawColor(renderer, 0.15,0.4,0.15,1.0);
-        SDL_RenderClear(renderer);
-
-        nk_sdl_render(NK_ANTI_ALIASING_ON);
-
-        SDL_RenderPresent(renderer);
-        
-        printf("4\n");
+        //FPS normalization
+        past_reading += dt;
+        dt = SDL_GetTicks() - past_reading;
+        SDL_Delay((1000/target_fps - dt)*(dt < 1000/target_fps));
     }
 
     close();
+    #ifdef NK_SDL_RENDERER_IMPLEMENTATION
+    SDL_DestroyRenderer(renderer);
+    #endif
 }
